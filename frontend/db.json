@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@bookexpert.com",
+      "password": "admin123"
+    }
+  ],
+  "employees": [
+    {
+      "id": "1",
+      "fullName": "Rahul Sharma",
+      "gender": "Male",
+      "dob": "1998-05-10",
+      "state": "Maharashtra",
+      "active": true,
+      "image": ""
+    },
+    {
+      "id": "2",
+      "fullName": "Anjali Verma",
+      "gender": "Female",
+      "dob": "1996-11-22",
+      "state": "Delhi",
+      "active": false,
+      "image": ""
+    }
+  ]
+}
