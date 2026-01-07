@@ -11,6 +11,7 @@ import { deleteEmployee } from "../services/employeeApi";
 import EmployeeModal from "../components/employee/EmployeeModal";
 import EmployeeForm from "../components/employee/EmployeeForm";
 import { addEmployee } from "../services/employeeApi";
+import { User as UserIcon, LogOut, ChevronDown } from "lucide-react";
 
 
 
@@ -41,6 +42,7 @@ const Dashboard = () => {
    * Navigation hook
    */
   const navigate = useNavigate();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   /**
    * EMPLOYEE STATE
@@ -379,16 +381,33 @@ const Dashboard = () => {
             Employee Management
           </h1>
 
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-300">
-              {user?.email}
-            </span>
+          <div className="relative">
             <button
-              onClick={handleLogout}
-              className="px-4 py-2 text-sm rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-all backdrop-blur-sm"
+              onClick={() => setIsUserMenuOpen((v) => !v)}
+              className="flex items-center gap-3 px-3 py-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-gray-100 transition"
             >
-              Logout
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white">
+                {(user?.email?.[0] || "?").toUpperCase()}
+              </span>
+              <span className="hidden sm:block max-w-[180px] truncate text-sm">
+                {user?.email || "User"}
+              </span>
+              <ChevronDown className="w-4 h-4 text-gray-300" />
             </button>
+            {isUserMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-[#0f172a]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-2 z-50">
+                <div className="px-3 py-2 text-xs text-gray-400 truncate">
+                  {user?.email || "User"}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-sm">Logout</span>
+                </button>
+              </div>
+            )}
           </div>
         </header>
 
