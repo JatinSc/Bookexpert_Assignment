@@ -71,6 +71,7 @@ npm run server
      - State management
      - UX and responsiveness
      - Code readability
+     - added react toast message notification for success and error for better user    experience.
 
 2. JSON Server as Mock Backend
    - Simulates REST APIs (GET, POST, PUT, PATCH, DELETE).
