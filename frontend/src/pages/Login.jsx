@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authApi";
+import { Mail, Eye, EyeOff } from "lucide-react";
 
 /**
  * =========================
@@ -20,154 +21,110 @@ import { loginUser } from "../services/authApi";
  */
 
 const Login = () => {
-  /**
-   * Local state for form fields
-   * ----------------------------
-   * Controlled inputs are used so:
-   * - We can validate inputs
-   * - We can easily reset form
-   */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  /**
-   * UI state for better UX
-   */
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  /**
-   * Navigation hook from React Router
-   * ---------------------------------
-   * Used to redirect user after login
-   */
   const navigate = useNavigate();
-
-  /**
-   * Handle form submission
-   */
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    /**
-     * Basic frontend validation
-     * -------------------------
-     * We do NOT rely only on backend checks.
-     * This improves UX by giving instant feedback.
-     */
     if (!email || !password) {
       setError("Email and password are required");
       return;
     }
-
     try {
       setLoading(true);
       setError("");
-
-      /**
-       * Call login API
-       * --------------
-       * This will:
-       * - Validate credentials (mock)
-       * - Generate fake JWT
-       * - Store token in localStorage
-       */
       await loginUser({ email, password });
-
-      /**
-       * Redirect user after successful login
-       * ------------------------------------
-       * Dashboard is protected by ProtectedRoute,
-       * so only authenticated users can reach it.
-       */
       navigate("/dashboard");
     } catch (err) {
-      /**
-       * Handle login errors gracefully
-       * -------------------------------
-       * Error message comes from authApi
-       */
       setError(err.message || "Login failed");
     } finally {
-      /**
-       * Stop loading indicator
-       */
       setLoading(false);
     }
   };
-
+ 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      {/* Card container */}
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Login to BookExpert
-        </h2>
-
-        {/* Error Message */}
-        {error && (
-          <p className="mb-4 text-sm text-red-600 text-center">
-            {error}
-          </p>
-        )}
-
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email */}
+    <div className="min-h-screen relative bg-[#0f172a] text-gray-100 overflow-hidden flex items-center justify-center">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/30 blur-[120px]" />
+        <div className="absolute top-[10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/30 blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[50%] rounded-full bg-indigo-900/20 blur-[150px]" />
+        <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] rounded-full bg-pink-900/20 blur-[100px]" />
+      </div>
+      <div className="relative z-10 w-full max-w-md px-6">
+        <h2 className="text-3xl md:text-4xl font-semibold text-center">Welcome Back</h2>
+        <p className="mt-2 text-center text-sm text-gray-300">Enter your details below to access your hiring dashboard.</p>
+ 
+        {error && <p className="mt-4 text-sm text-red-400 text-center">{error}</p>}
+ 
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div>
-            <label className="block text-sm font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="admin@bookexpert.com"
-            />
+            <label className="block text-sm font-medium mb-2">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@bookexpert.com"
+                className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40"
+              />
+            </div>
           </div>
-
-          {/* Password */}
+ 
           <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-            />
+            <label className="block text-sm font-medium mb-2">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full pl-4 pr-12 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+            {/* <div className="mt-2 text-right">
+              <a href="#" className="text-sm text-blue-300 hover:text-blue-200">Forget Password?</a>
+            </div> */}
           </div>
-
-          {/* Submit Button */}
+ 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded-md text-white font-medium ${
-              loading
-                ? "bg-blue-300 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
+            className={`w-full mt-4 py-3.5 rounded-2xl text-white font-medium transition ${
+              loading ? "bg-blue-600/60 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-500"
+            } shadow-lg shadow-blue-900/30`}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Logging in..." : "Log in"}
           </button>
+ 
+          <div className="flex items-center gap-4 text-gray-400 text-sm mt-4">
+            <span className="flex-1 h-px bg-white/10" />
+            <span>Or sign up with</span>
+            <span className="flex-1 h-px bg-white/10" />
+          </div>
+ 
+          <p className="text-sm text-center mt-2">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-blue-300 hover:text-blue-200">
+              Create one
+            </Link>
+          </p>
         </form>
-
-        {/* Register Redirect */}
-        <p className="mt-4 text-sm text-center">
-          Don’t have an account?{" "}
-          <Link
-            to="/register"
-            className="text-blue-600 hover:underline"
-          >
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );
 };
-
+ 
 export default Login;
