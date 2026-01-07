@@ -43,3 +43,18 @@ export const updateEmployee = async (id, employeeData) => {
 export const deleteEmployee = async (id) => {
   await apiClient.delete(`/employees/${id}`);
 };
+
+/**
+ * PATCH /employees/:id
+ * Update partial employee data
+ *
+ * Decision:
+ * - PATCH is used instead of PUT
+ * - Only updates fields that change
+ */
+export const toggleEmployeeStatus = async (id, active) => {
+  const response = await apiClient.patch(`/employees/${id}`, {
+    active,
+  });
+  return response.data;
+};

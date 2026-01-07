@@ -1,1 +1,58 @@
 @import "tailwindcss";
+
+/* =========================
+   PRINT STYLES
+   ========================= */
+
+/*
+  Hide non-essential UI during print
+*/
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  /*
+    Improve table readability on paper
+  */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  thead {
+    background-color: #f3f3f3;
+  }
+}
+
+/* =========================
+   SCREEN vs PRINT VISIBILITY
+   ========================= */
+
+/* Default (screen) */
+.print-only {
+  display: none;
+}
+
+.screen-only {
+  display: flex;
+}
+
+/* Print rules */
+@media print {
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: inline !important;
+  }
+}
+
