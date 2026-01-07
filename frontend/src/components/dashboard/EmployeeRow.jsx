@@ -1,16 +1,4 @@
-/**
- * =========================
- * EMPLOYEE ROW COMPONENT
- * =========================
- *
- * Responsibilities:
- * - Render a single employee row
- * - Display data in correct columns
- *
- * IMPORTANT:
- * - No API calls here
- * - Actions (edit/delete) will be wired later
- */
+import { Pencil, Trash2 } from "lucide-react";
 
 const EmployeeRow = ({ employee, onToggleStatus, onDelete, onEdit }) => {
     /**
@@ -105,15 +93,19 @@ const EmployeeRow = ({ employee, onToggleStatus, onDelete, onEdit }) => {
             <td className="no-print px-6 py-4 text-sm space-x-2">
                 <button
                     onClick={() => onEdit(employee)}
-                    className="px-3 py-1.5 rounded-lg border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all"
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all"
+                    aria-label="Edit"
+                    title="Edit"
                 >
-                    Edit
+                    <Pencil className="w-4 h-4" />
                 </button>
                 <button
                     onClick={() => onDelete(id)}
-                    className="px-3 py-1.5 rounded-lg border border-red-500/30 text-red-400 hover:text-red-300 hover:bg-red-500/20 hover:border-red-500/50 transition-all"
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-red-500/30 text-red-400 hover:text-red-300 hover:bg-red-500/20 hover:border-red-500/50 transition-all"
+                    aria-label="Delete"
+                    title="Delete"
                 >
-                    Delete
+                    <Trash2 className="w-4 h-4" />
                 </button>
             </td>
         </tr>

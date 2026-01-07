@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authApi";
 import { Mail, Eye, EyeOff } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 /**
  * =========================
@@ -32,15 +33,19 @@ const Login = () => {
     e.preventDefault();
     if (!email || !password) {
       setError("Email and password are required");
+      toast.error("Email and password are required");
       return;
     }
     try {
       setLoading(true);
       setError("");
       await loginUser({ email, password });
+      toast.success("Logged in");
       navigate("/dashboard");
     } catch (err) {
-      setError(err.message || "Login failed");
+      const msg = err.message || "Login failed";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

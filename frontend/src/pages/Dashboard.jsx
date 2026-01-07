@@ -12,6 +12,7 @@ import EmployeeModal from "../components/employee/EmployeeModal";
 import EmployeeForm from "../components/employee/EmployeeForm";
 import { addEmployee } from "../services/employeeApi";
 import { User as UserIcon, LogOut, ChevronDown } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 
 
@@ -134,16 +135,9 @@ const Dashboard = () => {
         const data = await getEmployees();
         setEmployees(data);
       } catch (err) {
-        /**
-         * Error handling
-         * --------------
-         * In real apps, error structure may vary
-         */
         setError("Failed to load employees");
+        toast.error("Failed to load employees");
       } finally {
-        /**
-         * Stop loading spinner
-         */
         setLoading(false);
       }
     };
@@ -156,6 +150,7 @@ const Dashboard = () => {
    */
   const handleLogout = () => {
     logoutUser();
+    toast.success("Logged out");
     navigate("/login");
   };
 
@@ -191,15 +186,9 @@ const Dashboard = () => {
             : emp
         )
       );
+      toast.success(`Marked ${updatedStatus ? "Active" : "Inactive"}`);
     } catch (error) {
-      /**
-       * Error handling
-       * --------------
-       * In real apps:
-       * - Show toast
-       * - Revert optimistic update
-       */
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     }
   };
 
@@ -240,15 +229,9 @@ const Dashboard = () => {
           (emp) => emp.id !== employeeId
         )
       );
+      toast.success("Employee deleted");
     } catch (error) {
-      /**
-       * Error handling
-       * --------------
-       * In real apps:
-       * - Show toast
-       * - Retry option
-       */
-      alert("Failed to delete employee");
+      toast.error("Failed to delete employee");
     }
   };
 
@@ -284,14 +267,9 @@ const Dashboard = () => {
        * Close modal after successful add
        */
       setIsAddModalOpen(false);
+      toast.success("Employee added");
     } catch (error) {
-      /**
-       * Error handling
-       * --------------
-       * In real apps:
-       * - Show toast notification
-       */
-      alert("Failed to add employee");
+      toast.error("Failed to add employee");
     }
   };
 
@@ -345,8 +323,9 @@ const Dashboard = () => {
        */
       setIsEditModalOpen(false);
       setSelectedEmployee(null);
+      toast.success("Employee updated");
     } catch (error) {
-      alert("Failed to update employee");
+      toast.error("Failed to update employee");
     }
   };
 
