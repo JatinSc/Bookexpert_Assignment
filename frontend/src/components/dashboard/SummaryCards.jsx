@@ -45,9 +45,6 @@ const SummaryCards = ({ employees }) => {
         <h3 className="text-lg font-bold text-gray-100">
           Status
         </h3>
-        <button className="text-blue-400 text-sm font-semibold hover:text-blue-300 hover:underline transition-colors">
-          View Stats
-        </button>
       </div>
       <hr className="border-white/10" />
 
@@ -68,7 +65,8 @@ const SummaryCards = ({ employees }) => {
               strokeWidth="5"
               strokeDasharray={`${activePercentage} ${100 - activePercentage}`}
               strokeDashoffset="0"
-              className="transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+              className="transition-all duration-1000 ease-out"
+              strokeLinecap="round"
             ></circle>
 
             {/* Inactive Segment (Red/Gray - filling the rest) */}
@@ -87,13 +85,14 @@ const SummaryCards = ({ employees }) => {
               strokeWidth="5"
               strokeDasharray={`${inactivePercentage} ${100 - inactivePercentage}`}
               strokeDashoffset={-activePercentage} // Start where active ends
-              className="transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+              className="transition-all duration-1000 ease-out"
+              strokeLinecap="round"
             ></circle>
           </svg>
           
           {/* Center Text */}
            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-3xl font-bold text-white drop-shadow-md">{totalEmployees}</span>
+              <span className="text-3xl font-bold text-white">{totalEmployees}</span>
               <span className="text-xs text-gray-400 font-medium">Total</span>
            </div>
         </div>
@@ -103,7 +102,7 @@ const SummaryCards = ({ employees }) => {
           {/* Active stats */}
           <div className="flex items-center justify-between group">
              <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 border border-white/20"></span>
                 <span className="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Active</span>
              </div>
             <span className="text-xl font-bold text-gray-100">{activeEmployees}</span>
@@ -112,7 +111,7 @@ const SummaryCards = ({ employees }) => {
           {/* Inactive stats */}
           <div className="flex items-center justify-between group">
              <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 border border-white/20"></span>
                 <span className="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Inactive</span>
              </div>
             <span className="text-xl font-bold text-gray-100">{inactiveEmployees}</span>
